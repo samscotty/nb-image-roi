@@ -34,15 +34,9 @@ class BBoxControls(UIBase, VBox):
             Box boundaries for array slicing.
 
         """
-        return tuple(
-            [
-                slice(
-                    self.y.value + self.linewidth, self.y.value + self.height.value + self.linewidth
-                ),
-                slice(
-                    self.x.value + self.linewidth, self.x.value + self.width.value + self.linewidth
-                ),
-            ]
+        return (
+            slice(self.y.value + self.linewidth, self.y.value + self.height.value + self.linewidth),
+            slice(self.x.value + self.linewidth, self.x.value + self.width.value + self.linewidth),
         )
 
     def set_inputs(self, x, y, width, height):

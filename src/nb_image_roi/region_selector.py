@@ -1,5 +1,6 @@
 from IPython.display import display as ipython_display
 from ipywidgets import Button, HBox, Layout, VBox
+import numpy as np
 
 from .ui.bbox import BBoxControls
 from .ui.common import UIBase
@@ -21,11 +22,11 @@ class RegionSelector(UIBase, HBox):
 
         """
         super().__init__()
-        self.im = image
+        self.im = np.asarray(image)
         self._active = False
 
         # define widgets
-        self.figure = self.add(ImageRegionSelect, image=image, minspan=minspan)
+        self.figure = self.add(ImageRegionSelect, image=self.im, minspan=minspan)
         self.sidebar = self.add(VBox, layout=Layout(margin="5px 0 0"))
         self.draw_button = Button(
             description="Draw",
@@ -47,8 +48,8 @@ class RegionSelector(UIBase, HBox):
         self.controls = self.add_to(
             self.sidebar,
             BBoxControls,
-            height=image.shape[0],
-            width=image.shape[1],
+            height=self.im.shape[0],
+            width=self.im.shape[1],
             linewidth=self.BBOX_STYLE["linewidth"],
             minspan=minspan,
         )

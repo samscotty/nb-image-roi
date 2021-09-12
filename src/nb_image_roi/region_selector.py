@@ -113,6 +113,17 @@ class RegionSelector(UIBase, HBox):
         height = round(max(ys) - min(ys))
         return {"x": x, "y": y, "width": width, "height": height}
 
+    def get_inputs(self):
+        """Inputs specified in bounding box controls.
+
+        Returns:
+            Bounding box inputs.
+
+        """
+        if not self._active:
+            return
+        return self.controls.get_inputs()
+
     def _draw_region_handler(self, _):
         bbox = self.get_boundaries()
 
@@ -136,11 +147,6 @@ class RegionSelector(UIBase, HBox):
         self.draw_button.disabled = False
 
     def _update_region_handler(self, _):
-        self.figure.update_roi(
-            x=self.controls.x.value,
-            y=self.controls.y.value,
-            width=self.controls.width.value,
-            height=self.controls.height.value,
-        )
+        self.figure.update_roi(**self.get_inputs())
         self.roi.clear_plot()
         self.roi.plot(image=self.get_roi())

@@ -39,6 +39,15 @@ class BBoxControls(UIBase, VBox):
             slice(self.x.value + self.linewidth, self.x.value + self.width.value + self.linewidth),
         )
 
+    def get_inputs(self):
+        """Get current input boundaries."""
+        return {
+            "x": self.x.value,
+            "y": self.y.value,
+            "width": self.width.value,
+            "height": self.height.value,
+        }
+
     def set_inputs(self, x, y, width, height):
         """Set new input boundaries."""
         self.x.value = x

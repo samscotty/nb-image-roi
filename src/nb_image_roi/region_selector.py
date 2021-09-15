@@ -26,7 +26,7 @@ class RegionSelector(UIBase, HBox):
         self._active = False
 
         # define widgets
-        self.figure = self.add(ImageRegionSelect, image=self.im, minspan=minspan)
+        self.selector = self.add(ImageRegionSelect, image=self.im, minspan=minspan)
         self.sidebar = self.add(VBox, layout=Layout(margin="5px 0 0"))
         self.draw_button = Button(
             description="Draw",
@@ -99,8 +99,8 @@ class RegionSelector(UIBase, HBox):
             ROI bounding box.
 
         """
-        click = self.figure._click
-        release = self.figure._release
+        click = self.selector._click
+        release = self.selector._release
 
         if not all(click) and not all(release):
             return
@@ -133,7 +133,7 @@ class RegionSelector(UIBase, HBox):
         self._active = True
         self.controls.set_inputs(**bbox)
         self.controls.show_inputs()
-        self.figure.draw_roi(**bbox, **self.BBOX_STYLE)
+        self.selector.draw_roi(**bbox, **self.BBOX_STYLE)
         self.roi.plot(self.get_roi())
         self.draw_button.disabled = True
         self.clear_button.disabled = False
@@ -141,12 +141,12 @@ class RegionSelector(UIBase, HBox):
     def _clear_region_handler(self, _):
         self._active = False
         self.controls.hide_inputs()
-        self.figure.remove_roi()
+        self.selector.remove_roi()
         self.roi.clear_plot()
         self.clear_button.disabled = True
         self.draw_button.disabled = False
 
     def _update_region_handler(self, _):
-        self.figure.update_roi(**self.get_inputs())
+        self.selector.update_roi(**self.get_inputs())
         self.roi.clear_plot()
         self.roi.plot(image=self.get_roi())

@@ -67,11 +67,12 @@ class BBoxControls(UIBase, VBox):
 
 
 class BBoxInput(BoundedIntText):
-    def __init__(self, **kwargs):
+    def __init__(self, hidden=True, **kwargs):
         """Input field for bounding box."""
         super().__init__(**kwargs)
         self.layout.width = "240px"
-        self.layout.visibility = "hidden"
+        if hidden:
+            self.hide()
 
     def hide(self):
         self.layout.visibility = "hidden"

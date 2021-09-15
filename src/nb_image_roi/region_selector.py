@@ -1,4 +1,4 @@
-from IPython.display import display as ipython_display
+from IPython.display import display
 from ipywidgets import Button, HBox, Layout, VBox
 import numpy as np
 
@@ -65,7 +65,7 @@ class RegionSelector(UIBase, HBox):
 
         # show on init
         if not hidden:
-            ipython_display(self)
+            display(self)
 
     def get_roi(self):
         """Array of selected region of interest.
